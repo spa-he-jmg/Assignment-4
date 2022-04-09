@@ -1,0 +1,393 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    min-width: 300px;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #121213;
+    font-family: 'Calistoga';
+}
+
+#wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 100%;
+}
+
+#overlay {
+    width: 100%;
+    min-width: 300px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+header {
+    width: 100%;
+    height: 51px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+}
+
+header button {
+    height: 75%;
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+main {
+    width: 100%;
+    height: calc(100vh - 51px);
+}
+
+#game-wrapper {
+    margin: 0 auto;
+    max-width: 500px;
+    height: 100%;
+    min-height: 535px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+#title {
+    margin: 0;
+    color: white;
+    font-size: 35px;
+}
+
+#board-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+    height: 75%;
+}
+
+#board {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.board-row {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.board-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.75em;
+    border-bottom: 2px solid white;
+    width: 50px;
+    height: 50px;
+}
+
+.correct {
+    color: #727fc9;
+    border-bottom-color: #727fc9;
+}
+
+.present {
+    color: #db8f39;
+    border-bottom-color: #db8f39;
+}
+
+.absent {
+    color: gray;
+    border-bottom-color: gray;
+}
+
+#keyboard {
+    margin: 0 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 200px;
+    min-width: 285px;
+    flex-wrap: nowrap;
+    gap: 5px;
+}
+
+.keyboard-row {
+    width: 100%;
+    height: 58px;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 6px;
+}
+
+.keyboard-key {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    flex: 1;
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: 1.5px solid gray;
+    color: white;
+    border-radius: 5px;
+}
+
+#test-key {
+    border-color: #3a3a3c;
+    background: #3a3a3c;
+}
+
+#enter-key, #delete-key {
+    flex: 1.5;
+    font-size: .7em;
+}
+
+.spacer-key {
+    flex: .5;
+}
+
+.modal-exit-btn {
+    background: none;
+    color: white;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 12px;
+    font-size: 25px;
+    font-weight: lighter;
+    margin: 0;
+    padding: 0;
+}
+
+.modal-exit-btn span{
+    position: fixed;
+}
+
+#debug-btn {
+    position: absolute;
+    top: 60px;
+    left: max(150px, 50%);
+    transform: translate(-50%, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    margin: 0px;
+    padding: 2px 10px;
+    background: #121213;
+    border: 2px solid grey;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+#debug-btn svg {
+    display: inline-block;
+    width: 31px;
+    height: 31px;
+}
+
+#debug-btn span {
+    color: white;
+    padding-left: 10px;
+    font-family: 'Calistoga';
+    font-size: 1.2em;
+}
+
+#result-modal {
+    width: fit-content;
+    height: 50px;
+    padding: 0 30px;
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: gray;
+    color: white;
+    border-radius: 5px;
+}
+
+.modal {
+    width: 75%;
+    min-width: 280px;
+    max-width: 855px;
+    height: fit-content;
+    min-height: 380px;
+    max-height: calc(100vh - 100px);
+    padding: 10px 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    color: white;
+    background: #121213;
+    z-index: 10000;
+    overflow-y: auto;
+}
+
+.modal-wrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    padding: 0 18px;
+}
+
+#help-modal h1 {
+    align-self: center;
+}
+
+#stats-modal .modal-wrapper {
+    height: 380px;
+}
+
+#stats-modal .modal-body {
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+}
+
+#stats {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat div {
+    font-size: 2em;
+}
+
+.stat h4 {
+    margin: 0;
+    font-size: 1.3em;
+}
+
+#guesses {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+}
+
+#guesses-chart {
+    display: flex;
+    gap: 30px;
+    flex: 1;
+}
+
+.guess-stat {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 5px;
+}
+
+.guess-bar {
+    background-color: #727fc9;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.guess-lvl-6 {
+    height: 100%;
+}
+
+#play-again-btn {
+    background: none;
+    margin: 0;
+    margin-top: 20px;
+    padding: 5px 10px;
+    border: 1px solid #727fc9;
+    border-radius: 5px;
+    color: #727fc9;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#debug-modal {
+    justify-content: space-around;
+    align-items: center;
+    min-height: 200px;
+    max-height: 200px;
+}
+
+#close-debug-btn {
+    width: 150px;
+    height: 45px;
+    background: none;
+    color: #727fc9;
+    border: 2px solid #727fc9;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+@media screen and (min-width: 980px){
+    #debug-btn {
+        top: unset;
+        left: 100px;
+        bottom: 15px;
+    }
+}
+
+.stp-scroll {
+    overflow: hidden;
+}
+.dp-none {
+    display: none;
+}
+
+.dp-flex {
+    display: flex;
+}
+
+.hidden {
+    visibility: none;
+}
+
+.active {
+    display: block;
+}
