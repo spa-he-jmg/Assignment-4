@@ -6,7 +6,7 @@ async function initVocab() {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
+            'Access-Control-Allow-Origin': 'https://spa-he-jmg.github.io/Assignment-4/'
         }
     });
     const result = await response.json();
