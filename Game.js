@@ -1,4 +1,4 @@
-import { addBoardLetter, deleteBoardLetter, updateGuessResults, updateKeyBoardResults, endGame} from "./Display.js";
+import { addBoardLetter, deleteBoardLetter, updateGuessResults, updateKeyBoardResults, endGame, hideDebugOption} from "./Display.js";
 
 export class Game {
     constructor(answerBank, validBank, stats) {
@@ -44,6 +44,10 @@ export class Game {
             else {
 
                 this.guessCount++;
+
+                if (this.guessCount === 1) {
+                    hideDebugOption();
+                }
 
                 let guessResults = [];
                 let correctCount = 0;
