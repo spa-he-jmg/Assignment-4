@@ -1,4 +1,6 @@
 import { Game } from './Game.js';
+import { showModal } from './Display.js';
+import { setHandlers } from './Handlers.js';
 
 async function initVocab() {
     const response = await fetch('https://murmuring-atoll-65515.herokuapp.com/', {
@@ -13,6 +15,52 @@ async function initVocab() {
     return result;
 }
 
-initVocab().then((vocab) => {
-    console.log(vocab);
+initVocab().then((result) => {
+
+    const joinedBanks = [result[0].words, result[1].words];
+
+    const answerBank = result[0].words;
+
+    const validBank = new Set([].concat(...joinedBanks));
+
+    let stats = JSON.parse(localStorage.getItem('stats'));
+
+    if (stats === null) {
+        showModal('help-modal');
+
+        stats = {
+            won: 0,
+            played: 0,
+            guesses: [
+                {
+                    num: 1,
+                    count: 0
+                },
+                {
+                    num: 2,
+                    count: 0
+                },
+                {
+                    num: 3,
+                    count: 0
+                },
+                {
+                    num: 4,
+                    count: 0
+                },
+                {
+                    num: 5,
+                    count: 0
+                },
+                {
+                    num: 6,
+                    count: 0
+                }
+            ]
+        }
+    }
+
+    let game = new Game(answerBank, validBank, stats);
+
+    setHandlers(game);
 });

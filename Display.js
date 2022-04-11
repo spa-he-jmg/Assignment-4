@@ -1,0 +1,174 @@
+export function hideModal() {
+
+    let overlay = document.getElementById('overlay');
+    let helpModal = document.getElementById('help-modal');
+    let statsModal = document.getElementById('stats-modal');
+    let debugModal = document.getElementById('debug-modal');
+
+    helpModal.classList.remove('dp-flex');
+    helpModal.classList.add('dp-none');
+
+    statsModal.classList.remove('dp-flex');
+    statsModal.classList.add('dp-none');
+
+    debugModal.classList.remove('dp-flex');
+    debugModal.classList.add('dp-none');
+
+    overlay.classList.remove('dp-flex');
+    overlay.classList.add('dp-none');
+}
+
+export function showModal(modalId) {
+
+    let overlay = document.getElementById('overlay');
+    let modal = document.getElementById(modalId);
+
+    modal.classList.remove('dp-none');
+    modal.classList.add('dp-flex');
+
+    overlay.classList.remove('dp-none');
+    overlay.classList.add('dp-flex');
+}
+
+export function showDebugOption() {
+    let debugBtn = document.getElementById('debug-btn');
+
+    debugBtn.classList.remove('dp-none');
+    debugBtn.classList.add('dp-flex');
+}
+
+export function hideDebugOption() {
+    let debugBtn = document.getElementById('debug-btn');
+
+    debugBtn.classList.remove('dp-flex');
+    debugBtn.classList.add('dp-none');
+}
+
+export function showDebugModal(answer) {
+    showModal('debug-modal');
+
+    let debugAnswer = document.getElementById('debug-answer');
+
+    debugAnswer.textContent = 'answer';
+}
+
+export function addBoardLetter(letter, row, cell) {
+    let currentCell = document.getElementById(`row-${row}-cell-${cell}`);
+
+    currentCell.textContent = letter;
+}
+
+export function deleteBoardLetter(row, cell) {
+    let currentCell = document.getElementById(`row-${row}-cell-${cell}`);
+
+    currentCell.textContent = '';
+}
+
+export function updateGuessResults(row, guessResults) {
+    for (let i = 0; i < 4; i++) {
+        let cell = document.getElementById(`row-${row}-cell-${i + 1}`);
+
+        cell.classList.add(guessResults[i].hint);
+    }
+}
+
+export function updateKeyBoardResults(guessResults) {
+    for (let i = 0; i < 4; i++) {
+        let key = document.getElementById(`${guessResults[i].letter}-key`);
+
+        if (guessResults[i].hint === 'correct' && !key.classList.contains('correct-key')) {
+            key.classList.remove('present-key');
+            key.classList.add('correct');
+        }
+
+        if (guessResults[i].hint === 'present' && !key.classList.contains('correct-key')) {
+            key.classList.add('present-key');
+        }
+
+        if (guessResults[i].hint === 'absent' && !key.classList.contains('absent-key')) {
+            key.classList.add('absent-key');
+        }
+    }
+}
+
+export function addBoardRow(row) {
+    let boardRow = document.createElement('div');
+
+    boardRow.id = `row-${row}`;
+    boardRow.classList.add('board-row');
+
+    for (let i = 0; i < 4; i++) {
+        let cell = document.createElement('div');
+
+        cell.id = `row-${row}-cell-${i + 1}`;
+        cell.classList.add('board-cell');
+
+        boardRow.appendChild(cell);
+    }
+
+    document.getElementById('board').appendChild(boardRow);
+}
+
+export function updateStats(stats) {
+    document.getElementById('played').textContent = stats.played;
+    document.getElementById('win-percent').textContent = (stats.won / stats.played) * 100;
+
+    for (let guess in stats.guesses) {
+        if (guess.count) {
+            document.getElementById(`guess-bar-${guess.num}`).style.height = (guess.count / stats.won) * 100;
+            document.getElementById(`guesses-${guess.num}`).textContent = guess.count;
+        }
+    }
+}
+
+export function endGame(win, word) {
+    let resultModal = document.getElementById('result-modal');
+    let statsModal = document.getElementById('stats-modal');
+    let playAgainBtn =document.getElementById('play-again-btn');
+
+    playAgainBtn.classList.remove('dp-none');
+    playAgainBtn.classList.add('dp-block');
+
+    if (win) {
+        let winMessages = ['Impressive', 'Great', 'Nice', 'Fantastic', 'Terrific', 'Wonderful', 'Superb', 'Excellent', 'Tremendous', 'Magnificent'];
+
+        let winMessage = winMessages[Math.floor(Math.random() * winMessages.length)];
+
+        resultModal.textContent = winMessage;
+    }
+    else {
+        resultModal.textContent = word;
+    }
+
+    resultModal.classList.remove('dp-none');
+    resultModal.classList.add('dp-flex');
+
+    setTimeout(showModal('stats-modal'), 1500);
+}
+
+export function resetDisplay() {
+    let resultModal = document.getElementById('result-modal');
+    resultModal.classList.remove('dp-flex');
+    resultModal.classList.add('dp-none');
+
+    let playAgainBtn = document.getElementById('play-again-btn');
+
+    playAgainBtn.classList.remove('dp-block');
+    playAgainBtn.classList.add('dp-none');
+
+    document.getElementById('board').replaceChildren();
+
+    addBoardRow(1);
+
+    document.getElementsByClassName('keyboard-key');
+
+    let keys = [...document.querySelectorAll('.keyboard-key')];
+
+    for (let key in keys) {
+        key.classList.remove('correct-key');
+        key.classList.remove('present-key');
+        key.classList.remove('absent-key');
+    }
+
+    hideModal();
+}

@@ -28,7 +28,6 @@ html, body {
     left: 0;
     background: rgba(0, 0, 0, 0.5);
     z-index: 1000;
-    display: none;
     justify-content: center;
     align-items: center;
 }
@@ -154,14 +153,24 @@ main {
     margin: 0;
     padding: 0;
     background: none;
-    border: 1.5px solid gray;
+    border: 1.5px solid white;
     color: white;
     border-radius: 5px;
 }
 
-#test-key {
-    border-color: #3a3a3c;
-    background: #3a3a3c;
+.correct-key {
+    color: #727fc9;
+    border-color: #727fc9;
+}
+
+.present-key {
+    color: #db8f39;
+    border-color: #db8f39;
+}
+
+.absent-key {
+    color: gray;
+    border-color: gray;
 }
 
 #enter-key, #delete-key {
@@ -196,7 +205,6 @@ main {
     top: 60px;
     left: max(150px, 50%);
     transform: translate(-50%, 0);
-    display: flex;
     align-items: center;
     justify-content: center;
     width: 150px;
@@ -229,7 +237,6 @@ main {
     top: 100px;
     left: 50%;
     transform: translate(-50%, 0);
-    display: flex;
     justify-content: center;
     align-items: center;
     background-color: gray;
@@ -246,7 +253,6 @@ main {
     max-height: calc(100vh - 100px);
     padding: 10px 15px;
     border-radius: 8px;
-    display: flex;
     flex-direction: column;
     position: relative;
     color: white;
@@ -330,10 +336,6 @@ main {
     border-radius: 3px;
 }
 
-.guess-lvl-6 {
-    height: 100%;
-}
-
 #play-again-btn {
     background: none;
     margin: 0;
@@ -388,6 +390,6 @@ main {
     visibility: none;
 }
 
-.active {
+.dp-block {
     display: block;
 }
