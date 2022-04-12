@@ -1,4 +1,4 @@
-import { hideModal, showModal, resetDisplay, showDebugOption } from './Display.js';
+import { hideModal, showModal, resetDisplay, showDebugOption, showDebugModal } from './Display.js';
 
 export function setHandlers(game) {
     const overlay = document.getElementById('overlay');
@@ -44,6 +44,10 @@ export function setHandlers(game) {
     helpBtn.addEventListener('click', openModal);
     statsBtn.addEventListener('click', openModal);
 
+    document.getElementById('debug-btn').addEventListener('click', (event) => {
+        showDebugModal(game.currentWord); 
+    });
+
     const onScreenKeyboardPress = (event) => {
         if (event.target.classList.contains('keyboard-key')) {
             if (event.target.dataset.key === 'ENTER') {
@@ -60,7 +64,7 @@ export function setHandlers(game) {
 
     const keyboardPress = (event) => {
         if (event.keyCode >= 65 && event.keyCode <= 90) {
-            game.addLetter(String.fromCharCode(event.keyCode));
+            game.addLetter(String.fromCharCode(event.keyCode).toLowerCase());
         }
         else if (event.keyCode === 13) {
             game.addGuess();

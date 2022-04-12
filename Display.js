@@ -45,27 +45,29 @@ export function hideDebugOption() {
 }
 
 export function showDebugModal(answer) {
-    showModal('debug-modal');
 
     let debugAnswer = document.getElementById('debug-answer');
 
-    debugAnswer.textContent = 'answer';
+    debugAnswer.textContent = answer;
+
+    showModal('debug-modal');
 }
 
 export function addBoardLetter(letter, row, cell) {
-    let currentCell = document.getElementById(`row-${row}-cell-${cell}`);
 
-    currentCell.textContent = letter;
+    let currentCell = document.getElementById(`row-${row + 1}-cell-${cell}`);
+
+    currentCell.textContent = letter.toUpperCase();
 }
 
 export function deleteBoardLetter(row, cell) {
-    let currentCell = document.getElementById(`row-${row}-cell-${cell}`);
+    let currentCell = document.getElementById(`row-${row + 1}-cell-${cell}`);
 
     currentCell.textContent = '';
 }
 
 export function updateGuessResults(row, guessResults) {
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 5; i++) {
         let cell = document.getElementById(`row-${row}-cell-${i + 1}`);
 
         cell.classList.add(guessResults[i].hint);
@@ -73,12 +75,12 @@ export function updateGuessResults(row, guessResults) {
 }
 
 export function updateKeyBoardResults(guessResults) {
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 5; i++) {
         let key = document.getElementById(`${guessResults[i].letter}-key`);
 
         if (guessResults[i].hint === 'correct' && !key.classList.contains('correct-key')) {
             key.classList.remove('present-key');
-            key.classList.add('correct');
+            key.classList.add('correct-key');
         }
 
         if (guessResults[i].hint === 'present' && !key.classList.contains('correct-key')) {
@@ -91,16 +93,32 @@ export function updateKeyBoardResults(guessResults) {
     }
 }
 
+export function showInvalidMessage() {
+    let resultModal = document.getElementById('result-modal');
+
+    resultModal.textContent = 'Invalid Word';
+
+    resultModal.classList.remove('dp-none');
+    resultModal.classList.add('dp-flex');
+}
+
+export function hideResultModal() {
+    let resultModal = document.getElementById('result-modal');
+
+    resultModal.classList.remove('dp-flex');
+    resultModal.classList.add('dp-none');
+}
+
 export function addBoardRow(row) {
     let boardRow = document.createElement('div');
 
-    boardRow.id = `row-${row}`;
+    boardRow.id = `row-${row + 1}`;
     boardRow.classList.add('board-row');
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 5; i++) {
         let cell = document.createElement('div');
 
-        cell.id = `row-${row}-cell-${i + 1}`;
+        cell.id = `row-${row + 1}-cell-${i + 1}`;
         cell.classList.add('board-cell');
 
         boardRow.appendChild(cell);
@@ -111,17 +129,28 @@ export function addBoardRow(row) {
 
 export function updateStats(stats) {
     document.getElementById('played').textContent = stats.played;
-    document.getElementById('win-percent').textContent = (stats.won / stats.played) * 100;
+    document.getElementById('win-percent').textContent = Math.round((stats.won / stats.played) * 100);
 
-    for (let guess in stats.guesses) {
+    for (let guess of stats.guesses) {
         if (guess.count) {
-            document.getElementById(`guess-bar-${guess.num}`).style.height = (guess.count / stats.won) * 100;
+            let barHeight = (guess.count / stats.won) * 100;
+            document.getElementById(`guess-bar-${guess.num}`).style.height = `${barHeight}%`;
             document.getElementById(`guesses-${guess.num}`).textContent = guess.count;
+
+            if (barHeight < 21) {
+                document.getElementById(`guesses-${guess.num}`).classList.add('top-bar-stat');
+            }
+            else {
+                document.getElementById(`guesses-${guess.num}`).classList.remove('top-bar-stat');
+            }
         }
     }
 }
 
 export function endGame(win, word) {
+    document.getElementById('help-btn').classList.add('pntr-evnt-none');
+    document.getElementById('stats-btn').classList.add('pntr-evnt-none');
+
     let resultModal = document.getElementById('result-modal');
     let statsModal = document.getElementById('stats-modal');
     let playAgainBtn =document.getElementById('play-again-btn');
@@ -130,20 +159,23 @@ export function endGame(win, word) {
     playAgainBtn.classList.add('dp-block');
 
     if (win) {
-        let winMessages = ['Impressive', 'Great', 'Nice', 'Fantastic', 'Terrific', 'Wonderful', 'Superb', 'Excellent', 'Tremendous', 'Magnificent'];
+        let winMessages = ['IMPRESSIVE', 'GREAT', 'NICE', 'FANTASTIC', 'TERRIFIC', 'WONDERFUL', 'SUPERB', 'EXCELLENT', 'TREMENDOUS', 'MAGNIFICENT'];
 
         let winMessage = winMessages[Math.floor(Math.random() * winMessages.length)];
 
         resultModal.textContent = winMessage;
     }
     else {
-        resultModal.textContent = word;
+        resultModal.textContent = word.toUpperCase();
     }
 
     resultModal.classList.remove('dp-none');
     resultModal.classList.add('dp-flex');
 
-    setTimeout(showModal('stats-modal'), 1500);
+    document.getElementById('overlay').classList.add('pntr-evnt-none');
+    document.getElementById('exit-stats').classList.add('dp-none');
+
+    setTimeout(() => { showModal('stats-modal') }, 3000);
 }
 
 export function resetDisplay() {
@@ -158,17 +190,24 @@ export function resetDisplay() {
 
     document.getElementById('board').replaceChildren();
 
-    addBoardRow(1);
+    addBoardRow(0);
 
     document.getElementsByClassName('keyboard-key');
 
     let keys = [...document.querySelectorAll('.keyboard-key')];
 
-    for (let key in keys) {
+    for (let key of keys) {
         key.classList.remove('correct-key');
         key.classList.remove('present-key');
         key.classList.remove('absent-key');
     }
+
+    document.getElementById('help-btn').classList.remove('pntr-evnt-none');
+    document.getElementById('stats-btn').classList.remove('pntr-evnt-none');
+
+    document.getElementById('overlay').classList.remove('pntr-evnt-none');
+    document.getElementById('exit-stats').classList.remove('dp-none');
+    showDebugOption();
 
     hideModal();
 }

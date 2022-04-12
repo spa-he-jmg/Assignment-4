@@ -1,4 +1,4 @@
-import { addBoardLetter, deleteBoardLetter, updateGuessResults, updateKeyBoardResults, endGame, hideDebugOption} from "./Display.js";
+import { addBoardLetter, deleteBoardLetter, updateGuessResults, updateKeyBoardResults, updateStats, endGame, hideDebugOption, showInvalidMessage, hideResultModal, addBoardRow} from "./Display.js";
 
 export class Game {
     constructor(answerBank, validBank, stats) {
@@ -7,14 +7,17 @@ export class Game {
 
         this.stats = stats;
 
-        this.currentWord = false;
+        this.currentWord = this.answerBank[Math.floor(Math.random() * this.answerBank.length)];
         this.currentGuess = [];
 
         this.guessCount = 0;
+
+        console.log(this.currentWord)
     }
 
     setRound() {
         this.currentWord = this.answerBank[Math.floor(Math.random() * this.answerBank.length)];
+        console.log(this.currentWord);
         this.currentGuess = [];
         
         this.guessCount = 0;
@@ -23,23 +26,24 @@ export class Game {
     addLetter(letter) {
         if (this.currentGuess.length < 5 && this.guessCount < 6) {
             this.currentGuess.push(letter);
-            addBoardLetter();
+            addBoardLetter(letter, this.guessCount, this.currentGuess.length);
         }
     }
 
     deleteLetter() {
         if (this.currentGuess.length > 0 && this.guessCount < 6) {
             this.currentGuess.pop();
-            deleteBoardLetter();
+            deleteBoardLetter(this.guessCount, this.currentGuess.length + 1);
+            hideResultModal();
         }
     }
 
     addGuess() {
 
         if (this.currentGuess.length === 5 && this.guessCount < 6) {
-
-            if (!this.validBank.has(this.currentGuess)) {
+            if (!this.validBank.has(this.currentGuess.join(''))) {
                 console.log('Invalid word');
+                showInvalidMessage();
             }
             else {
 
@@ -52,7 +56,7 @@ export class Game {
                 let guessResults = [];
                 let correctCount = 0;
 
-                for (let i = 0; i < 4; i++) {
+                for (let i = 0; i < 5; i++) {
 
                     let letterResult = { letter: this.currentGuess[i] };
 
@@ -65,30 +69,39 @@ export class Game {
 
                     if (this.currentWord.includes(this.currentGuess[i])) {
                         letterResult.hint = 'present';
-                        guessResults.push();
+                        guessResults.push(letterResult);
                         continue;
                     }
 
                     letterResult.hint = 'absent';
+                    guessResults.push(letterResult);
                 }
 
                 updateGuessResults(this.guessCount, guessResults);
                 updateKeyBoardResults(guessResults);
 
                 if (correctCount === 5) {
+                    this.stats.played++
                     this.stats.won++;
 
                     this.stats.guesses[this.guessCount - 1].count++;
 
+                    localStorage.setItem('stats', JSON.stringify(this.stats));
+
+                    updateStats(this.stats);
                     endGame(true, this.currentWord);
                 }
                 else if (correctCount < 5 && this.guessCount === 6) {
+                    this.stats.played++;
+                    localStorage.setItem('stats', JSON.stringify(this.stats));
+                    
+                    updateStats(this.stats);
                     endGame(false, this.currentWord);
                 }
-
-                this.stats.played++;
-
-                localStorage.setItem('stats', JSON.stringify(this.stats));
+                else {
+                    this.currentGuess = [];
+                    addBoardRow(this.guessCount)          
+                }
             }
         }
     }

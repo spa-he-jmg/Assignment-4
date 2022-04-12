@@ -52,39 +52,39 @@
                 </div>
                 <div id="keyboard">
                     <div class="keyboard-row">
-                        <button id="Q-key" class="keyboard-key" data-key="Q">Q</button>
-                        <button id="W-key" class="keyboard-key" data-key="W">W</button>
-                        <button id="E-key" class="keyboard-key" data-key="E">E</button>
-                        <button id="R-key" class="keyboard-key" data-key="R">R</button>
-                        <button id="T-key" class="keyboard-key" data-key="T">T</button>
-                        <button id="Y-key" class="keyboard-key" data-key="Y">Y</button>
-                        <button id="U-key" class="keyboard-key" data-key="U">U</button>
-                        <button id="I-key" class="keyboard-key" data-key="I">I</button>
-                        <button id="O-key" class="keyboard-key" data-key="O">O</button>
-                        <button id="P-key" class="keyboard-key" data-key="P">P</button>
+                        <button id="q-key" class="keyboard-key" data-key="q">Q</button>
+                        <button id="w-key" class="keyboard-key" data-key="w">W</button>
+                        <button id="e-key" class="keyboard-key" data-key="e">E</button>
+                        <button id="r-key" class="keyboard-key" data-key="r">R</button>
+                        <button id="t-key" class="keyboard-key" data-key="t">T</button>
+                        <button id="y-key" class="keyboard-key" data-key="y">Y</button>
+                        <button id="u-key" class="keyboard-key" data-key="u">U</button>
+                        <button id="i-key" class="keyboard-key" data-key="i">I</button>
+                        <button id="o-key" class="keyboard-key" data-key="o">O</button>
+                        <button id="p-key" class="keyboard-key" data-key="p">P</button>
                     </div>
                     <div class="keyboard-row">
                         <div class="spacer-key"></div>
-                        <button id="A-key" class="keyboard-key" data-key="A">A</button>
-                        <button id="S-key" class="keyboard-key" data-key="S">S</button>
-                        <button id="D-key" class="keyboard-key" data-key="D">D</button>
-                        <button id="F-key" class="keyboard-key" data-key="F">F</button>
-                        <button id="G-key" class="keyboard-key" data-key="G">G</button>
-                        <button id="H-key" class="keyboard-key" data-key="H">H</button>
-                        <button id="J-key" class="keyboard-key" data-key="J">J</button>
-                        <button id="K-key" class="keyboard-key" data-key="K">K</button>
-                        <button id="L-key" class="keyboard-key" data-key="L">L</button>
+                        <button id="a-key" class="keyboard-key" data-key="a">A</button>
+                        <button id="s-key" class="keyboard-key" data-key="s">S</button>
+                        <button id="d-key" class="keyboard-key" data-key="d">D</button>
+                        <button id="f-key" class="keyboard-key" data-key="f">F</button>
+                        <button id="g-key" class="keyboard-key" data-key="g">G</button>
+                        <button id="h-key" class="keyboard-key" data-key="h">H</button>
+                        <button id="j-key" class="keyboard-key" data-key="j">J</button>
+                        <button id="k-key" class="keyboard-key" data-key="k">K</button>
+                        <button id="l-key" class="keyboard-key" data-key="l">L</button>
                         <div class="spacer-key"></div>
                     </div>
                     <div class="keyboard-row">
                         <button id="enter-key" class="keyboard-key" data-key="ENTER">ENTER</button>
-                        <button id="Z-key" class="keyboard-key" data-key="Z">Z</button>
-                        <button id="X-key" class="keyboard-key" data-key="X">X</button>
-                        <button id="C-key" class="keyboard-key" data-key="C">C</button>
-                        <button id="V-key" class="keyboard-key" data-key="V">V</button>
-                        <button id="B-key" class="keyboard-key" data-key="B">B</button>
-                        <button id="N-key" class="keyboard-key" data-key="N">N</button>
-                        <button id="M-key" class="keyboard-key" data-key="M">M</button>
+                        <button id="z-key" class="keyboard-key" data-key="z">Z</button>
+                        <button id="x-key" class="keyboard-key" data-key="x">X</button>
+                        <button id="c-key" class="keyboard-key" data-key="c">C</button>
+                        <button id="v-key" class="keyboard-key" data-key="v">V</button>
+                        <button id="b-key" class="keyboard-key" data-key="b">B</button>
+                        <button id="n-key" class="keyboard-key" data-key="n">N</button>
+                        <button id="m-key" class="keyboard-key" data-key="m">M</button>
                         <button id="delete-key" class="keyboard-key" data-key="DELETE">
                             <svg width="24px" height="24px" version="1.1" viewBox="0 0 135.47 101.6" xmlns="http://www.w3.org/2000/svg">
                                 <g transform="translate(280.91 -64.105)">
@@ -156,11 +156,11 @@
                         <h1>Statistics</h1>
                         <div id="stats">
                             <div class="stat">
-                                <div id="played">1</div>
+                                <div id="played"></div>
                                 <h4>Played</h4>
                             </div>
                             <div class="stat">
-                                <div id="win-percent">0</div>
+                                <div id="win-percent"></div>
                                 <h4>Win %</h4>
                             </div>
                         </div>
@@ -169,7 +169,7 @@
                             <div id="guesses-chart">
                                 <div class="guess-stat">
                                     <div id="guess-bar-1"class="guess-bar">
-                                        <div id="guesses-1">1</div>
+                                        <div id="guesses-1"></div>
                                     </div>
                                     <div class="guess-label">1</div>
                                 </div>
@@ -209,7 +209,7 @@
                     </div>
                 </div>
             </div>
-            <div id="debug-modal" class="modal">
+            <div id="debug-modal" class="modal dp-none">
                 <h1>Answer: <span id="debug-answer">Scare</span></h1>
                 <button id="close-debug-btn">Close</button>
             </div>

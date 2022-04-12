@@ -19,6 +19,10 @@ html, body {
     min-height: 100%;
 }
 
+button svg {
+    pointer-events: none;
+}
+
 #overlay {
     width: 100%;
     min-width: 300px;
@@ -28,6 +32,7 @@ html, body {
     left: 0;
     background: rgba(0, 0, 0, 0.5);
     z-index: 1000;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -183,6 +188,8 @@ main {
 }
 
 .modal-exit-btn {
+    width: 12.5px;
+    height: 28.5px;
     background: none;
     color: white;
     border: none;
@@ -197,7 +204,7 @@ main {
 }
 
 .modal-exit-btn span{
-    position: fixed;
+    pointer-events: none;
 }
 
 #debug-btn {
@@ -331,12 +338,21 @@ main {
 }
 
 .guess-bar {
+    min-width: 14px;
+    position: relative;
     background-color: #727fc9;
-    padding: 5px;
+    padding: 2px;
     border-radius: 3px;
 }
 
+.top-bar-stat {
+    position: absolute;
+    top: -25px;
+    left: 2px;
+}
+
 #play-again-btn {
+    pointer-events: auto;
     background: none;
     margin: 0;
     margin-top: 20px;
@@ -377,6 +393,10 @@ main {
 
 .stp-scroll {
     overflow: hidden;
+}
+
+.pntr-evnt-none {
+    pointer-events: none;
 }
 .dp-none {
     display: none;

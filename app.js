@@ -1,5 +1,5 @@
 import { Game } from './Game.js';
-import { showModal } from './Display.js';
+import { showModal, updateStats } from './Display.js';
 import { setHandlers } from './Handlers.js';
 
 async function initVocab() {
@@ -17,9 +17,9 @@ async function initVocab() {
 
 initVocab().then((result) => {
 
-    const joinedBanks = [result[0].words, result[1].words];
+    const joinedBanks = [result.selectBank, result.validBank];
 
-    const answerBank = result[0].words;
+    const answerBank = result.selectBank;
 
     const validBank = new Set([].concat(...joinedBanks));
 
@@ -57,8 +57,10 @@ initVocab().then((result) => {
                     count: 0
                 }
             ]
-        }
+        };
     }
+
+    updateStats(stats);
 
     let game = new Game(answerBank, validBank, stats);
 
